@@ -1,0 +1,36 @@
+text = """
+Once upon a time there was a king who ruled a vast kingdom.
+The people loved the king because he was fair and kind.
+But one day, a dark shadow fell over the land.
+"""
+words = text.split()
+import random
+
+markov_chain = {}
+
+for i in range(len(words) - 1):
+    current = words[i]
+    next_word = words[i + 1]
+    
+    if current not in markov_chain:
+        markov_chain[current] = []
+    
+    markov_chain[current].append(next_word)
+def generate_text(chain, start_word, length=15):
+    word = start_word
+    result = [word]
+    
+    for _ in range(length - 1):
+        next_words = chain.get(word)
+        if not next_words:
+            break
+        word = random.choice(next_words)
+        result.append(word)
+    
+    return ' '.join(result)
+start_word = "The"
+generated = generate_text(markov_chain, start_word, length=15)
+print("Generated Text:")
+print(generated)
+Generated Text:
+The people loved the king who ruled a king who
